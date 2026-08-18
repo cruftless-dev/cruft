@@ -64,7 +64,7 @@ unmodified. Where they don't yet, the docs name the gap.
 
 ```sh
 # npm (prebuilt binaries for linux, macOS, and Windows; x64 and arm64)
-npm install -g @cruftless-dev/cruft
+npm install -g cruftjs
 
 # or build from source
 cargo build --release --bin cruft -p cruft   # binary at target/release/cruft

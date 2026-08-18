@@ -1,5 +1,5 @@
 {
-  "name": "@cruftless-dev/cruft",
+  "name": "cruftjs",
   "version": "0.0.9",
   "description": "cruft — a hand-derived JavaScript/TypeScript runtime",
   "bin": {
