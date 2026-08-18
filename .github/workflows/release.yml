@@ -61,16 +61,16 @@ jobs:
           key: ${{ matrix.target }}
 
       - name: Build cruft
-        run: cargo build --release --bin cruft -p cruft --target ${{ matrix.target }}
+        run: cargo build --profile release-prod --bin cruft -p cruft --target ${{ matrix.target }}
 
       - name: Locate binary
         id: bin
         shell: bash
         run: |
           if [ "${{ runner.os }}" = "Windows" ]; then
-            echo "path=target/${{ matrix.target }}/release/cruft.exe" >> "$GITHUB_OUTPUT"
+            echo "path=target/${{ matrix.target }}/release-prod/cruft.exe" >> "$GITHUB_OUTPUT"
           else
-            echo "path=target/${{ matrix.target }}/release/cruft" >> "$GITHUB_OUTPUT"
+            echo "path=target/${{ matrix.target }}/release-prod/cruft" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Populate platform package
