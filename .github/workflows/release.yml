@@ -41,7 +41,7 @@ jobs:
             os: ubuntu-22.04-arm
           - pkg: cruft-darwin-x64
             target: x86_64-apple-darwin
-            os: macos-13
+            os: macos-14          # cross-compile x64 on Apple Silicon; avoids scarce Intel runners
           - pkg: cruft-darwin-arm64
             target: aarch64-apple-darwin
             os: macos-14
@@ -76,6 +76,10 @@ jobs:
       - name: Populate platform package
         shell: bash
         run: packaging/npm/build-platform.sh "${{ matrix.target }}" "${{ steps.bin.outputs.path }}"
+
+      - name: Ensure Rosetta 2 (run the cross-built x64 binary on Apple Silicon)
+        if: matrix.pkg == 'cruft-darwin-x64'
+        run: softwareupdate --install-rosetta --agree-to-license || true
 
       - name: Smoke test the binary
         shell: bash
