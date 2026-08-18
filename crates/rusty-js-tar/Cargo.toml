@@ -1,0 +1,13 @@
+[package]
+publish.workspace = true
+name = "rusty-js-tar"
+version = "0.1.0"
+edition = "2021"
+license.workspace = true
+description = "Hand-derived tar reader/writer for npm package tarballs."
+
+[lib]
+name = "rusty_js_tar"
+path = "src/lib.rs"
+
+[dependencies]

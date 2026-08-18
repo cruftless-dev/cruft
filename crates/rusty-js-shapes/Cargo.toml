@@ -1,0 +1,13 @@
+[package]
+license.workspace = true
+publish.workspace = true
+name = "rusty-js-shapes"
+version = "0.1.0"
+edition = "2021"
+description = "Hidden classes (shapes) for Cruft's object representation; the inline-cache fast-path cache-key supplier."
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+rusty-js-smallvec = { path = "../rusty-js-smallvec" }

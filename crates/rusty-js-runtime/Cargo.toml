@@ -1,0 +1,51 @@
+[package]
+license.workspace = true
+publish.workspace = true
+name = "rusty-js-runtime"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+rusty-js-deflate = { path = "../rusty-js-deflate" }
+rusty-js-ast = { path = "../rusty-js-ast" }
+rusty-js-parser = { path = "../rusty-js-parser" }
+rusty-js-bytecode = { path = "../rusty-js-bytecode" }
+rusty-js-gc = { path = "../rusty-js-gc" }
+
+rusty-js-jit = { path = "../rusty-js-jit" }
+
+rusty-js-shapes = { path = "../rusty-js-shapes" }
+rusty-js-basen = { path = "../rusty-js-basen" }
+
+rusty-js-streams = { path = "../rusty-js-streams" }
+
+rusty-js-formdata = { path = "../rusty-js-formdata" }
+
+rusty-js-buffer = { path = "../rusty-js-buffer" }
+
+ts-resolve = { path = "../ts-resolve" }
+
+rusty-js-temporal-calendar = { path = "../rusty-js-temporal-calendar" }
+
+rusty-js-temporal-core = { path = "../rusty-js-temporal-core" }
+rusty-web-crypto = { path = "../web-crypto" }
+rusty-asn1-der = { path = "../asn1-der" }
+rusty-js-unicode-ident = { path = "../rusty-js-unicode-ident" }
+rusty-js-ucd-tables = { path = "../rusty-js-ucd-tables" }
+
+serde_json = { package = "rusty-json-manifest", path = "../rusty-json-manifest" }
+indexmap = { package = "rusty-js-indexmap", path = "../rusty-js-indexmap" }
+
+rusty-host-dylib = { path = "../rusty-host-dylib" }
+rusty-js-url = { path = "../rusty-js-url" }
+rusty-textencoder = { path = "../textencoder" }
+
+rusty-form-urlencoded = { path = "../rusty-js-form-urlencoded" }
+
+[dev-dependencies]
+
+cruft = { path = "../cruft" }
+cruftscript-type-checker = { path = "../cruftscript-type-checker" }

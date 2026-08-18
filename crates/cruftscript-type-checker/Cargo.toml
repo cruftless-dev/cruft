@@ -1,0 +1,13 @@
+[package]
+license.workspace = true
+publish.workspace = true
+name = "cruftscript-type-checker"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+cruftscript-parser = { path = "../cruftscript-parser" }
+rusty-js-ast = { path = "../rusty-js-ast" }

@@ -1,0 +1,7 @@
+# Prebuilt binaries are populated at build time by build-platform.sh, never committed.
+platforms/*/cruft
+platforms/*/cruft.exe
+platforms/*/cpx
+platforms/*/cpx.exe
+# npm pack output
+*.tgz

@@ -1,0 +1,55 @@
+[package]
+license.workspace = true
+publish.workspace = true
+name = "cruft"
+version = "0.0.9"
+edition = "2021"
+build = "build.rs"
+
+[lib]
+name = "cruft"
+path = "src/lib.rs"
+
+[[bin]]
+name = "cruft"
+path = "src/main.rs"
+
+[dependencies]
+rusty-js-runtime = { path = "../rusty-js-runtime" }
+rusty-js-shapes = { path = "../rusty-js-shapes" }
+rusty-js-bytecode = { path = "../rusty-js-bytecode" }
+rusty-js-parser = { path = "../rusty-js-parser" }
+rusty-js-ast = { path = "../rusty-js-ast" }
+indexmap = { package = "rusty-js-indexmap", path = "../rusty-js-indexmap" }
+libc = "0.2"
+
+rusty-js-pm = { path = "../rusty-js-pm" }
+
+ts-resolve = { path = "../ts-resolve" }
+cruftscript-type-checker = { path = "../cruftscript-type-checker" }
+rusty-http-codec = { path = "../http-codec" }
+rusty-websocket = { path = "../websocket" }
+rusty-sockets = { path = "../sockets" }
+rusty-sqlite = { path = "../rusty-sqlite" }
+postcrust = { path = "../postcrust" }
+crizzle-core = { path = "../crizzle-core" }
+sql-core = { path = "../sql-core" }
+rusty-compression = { path = "../compression" }
+rusty-js-deflate = { path = "../rusty-js-deflate" }
+rusty-web-crypto = { path = "../web-crypto" }
+rusty-wasm = { path = "../wasm" }
+rusty-x509 = { path = "../x509" }
+rusty-tls = { path = "../tls" }
+rusty-asn1-der = { path = "../asn1-der" }
+rusty-http2-conn = { path = "../http2-conn" }
+rusty-js-punycode = { path = "../rusty-js-punycode" }
+rusty-js-url = { path = "../rusty-js-url" }
+rusty-js-basen = { path = "../rusty-js-basen" }
+rusty-js-percent-encoding = { path = "../rusty-js-percent-encoding" }
+rusty-form-urlencoded = { path = "../rusty-js-form-urlencoded" }
+rusty-js-idna = { path = "../rusty-js-idna" }
+serde_json = { package = "rusty-json-manifest", path = "../rusty-json-manifest" }
+
+[dev-dependencies]
+
+rusty-js-jit = { path = "../rusty-js-jit" }

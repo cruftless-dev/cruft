@@ -1,0 +1,65 @@
+
+[workspace]
+resolver = "2"
+members = [
+    "crates/asn1-der",
+    "crates/compression",
+    "crates/crizzle-core",
+    "crates/cruft",
+    "crates/cruftscript-parser",
+    "crates/cruftscript-type-checker",
+    "crates/http-codec",
+    "crates/http2-codec",
+    "crates/http2-conn",
+    "crates/http2-hpack",
+    "crates/postcrust",
+    "crates/rusty-host-dylib",
+    "crates/rusty-js-ast",
+    "crates/rusty-js-basen",
+    "crates/rusty-js-brotli",
+    "crates/rusty-js-buffer",
+    "crates/rusty-js-bytecode",
+    "crates/rusty-js-deflate",
+    "crates/rusty-js-form-urlencoded",
+    "crates/rusty-js-formdata",
+    "crates/rusty-js-gc",
+    "crates/rusty-js-idna",
+    "crates/rusty-js-indexmap",
+    "crates/rusty-js-jit",
+    "crates/rusty-js-parser",
+    "crates/rusty-js-percent-encoding",
+    "crates/rusty-js-pm",
+    "crates/rusty-js-pm-integrity",
+    "crates/rusty-js-punycode",
+    "crates/rusty-js-runtime",
+    "crates/rusty-js-shapes",
+    "crates/rusty-js-smallvec",
+    "crates/rusty-js-streams",
+    "crates/rusty-js-tar",
+    "crates/rusty-js-temporal-calendar",
+    "crates/rusty-js-temporal-core",
+    "crates/rusty-js-ucd-tables",
+    "crates/rusty-js-unicode-ident",
+    "crates/rusty-js-url",
+    "crates/rusty-json-manifest",
+    "crates/rusty-sqlite",
+    "crates/sockets",
+    "crates/sql-core",
+    "crates/textencoder",
+    "crates/tls",
+    "crates/ts-resolve",
+    "crates/wasm",
+    "crates/web-crypto",
+    "crates/websocket",
+    "crates/x509",
+]
+
+[workspace.package]
+license = "Apache-2.0 OR MIT"
+publish = false
+
+[profile.release-prod]
+inherits = "release"
+lto = "fat"
+codegen-units = 1
+strip = "symbols"

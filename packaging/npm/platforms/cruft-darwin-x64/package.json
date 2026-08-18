@@ -1,0 +1,15 @@
+{
+  "name": "@cruftless-dev/cruft-darwin-x64",
+  "version": "0.0.9",
+  "description": "cruft prebuilt binary for cruft-darwin-x64",
+  "os": [
+    "darwin"
+  ],
+  "cpu": [
+    "x64"
+  ],
+  "files": [
+    "cruft"
+  ],
+  "license": "Apache-2.0 OR MIT"
+}

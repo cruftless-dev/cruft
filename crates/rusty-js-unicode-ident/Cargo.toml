@@ -1,0 +1,14 @@
+[package]
+publish.workspace = true
+name = "rusty-js-unicode-ident"
+version = "0.1.0"
+edition = "2021"
+description = "Hand-derived UAX #31 identifier predicate for Cruft."
+license.workspace = true
+
+[lib]
+name = "rusty_js_unicode_ident"
+path = "src/lib.rs"
+
+[dependencies]
+rusty-js-ucd-tables = { path = "../rusty-js-ucd-tables" }

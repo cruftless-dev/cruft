@@ -1,0 +1,57 @@
+# The presto resolver core, ported to executable CruftScript (.fts).
+#
+# Pure string/regex transforms from presto's ExpressionEngine, executing on the
+# cruft runtime via the derived standard library (String/RegExp/Array+callbacks/
+# JSON), optional args, template literals, and if-return chains. Consumed by a .ts
+# server/I-O edge that imports it. Class-based directives, for-of, and the async
+# server edge still need CruftScript features (tracked in the cruft repo's
+# 2026-07-21-cruftscript-standard-library arc).
+
+boundary default = secure
+
+compartment Core boundary(secure) {
+  # HTML-escape a string (byte-identical to presto ExpressionEngine.escapeHtml).
+  export function escapeHtml(s: string): string boundary(secure) {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;")
+  }
+
+  # Apply a named display pipe to a string (presto ExpressionEngine.applyPipe).
+  export function applyPipe(str: string, pipe: string): string boundary(secure) {
+    if (pipe === "uppercase") {
+      return str.toUpperCase()
+    }
+    if (pipe === "lowercase") {
+      return str.toLowerCase()
+    }
+    if (pipe === "trim") {
+      return str.trim()
+    }
+    if (pipe === "capitalize") {
+      return str.charAt(0).toUpperCase().concat(str.slice(1))
+    }
+    return str
+  }
+
+  # Build an opening HTML tag with an escaped id + class (template-literal port).
+  export function openTag(tag: string, id: string, cls: string): string boundary(secure) {
+    return `<${tag} id="${escapeHtml(id)}" class="${escapeHtml(cls)}">`
+  }
+
+  # Slugify a name (presto builder: name.toLowerCase().replace(/[^a-z0-9]+/g,"-")),
+  # extended to strip leading/trailing dashes. Regex-literal replace chain.
+  export function slugify(name: string): string boundary(secure) {
+    return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+/g, "").replace(/-+$/g, "")
+  }
+
+  # Title-case each space-separated word: split -> map(capitalize) -> join. Uses
+  # the array callback surface (map with an inline callback) and String.split.
+  export function titleCase(s: string): string boundary(secure) {
+    return s.split(" ").map((w) => w.charAt(0).toUpperCase().concat(w.slice(1))).join(" ")
+  }
+
+  # Join non-empty class names into a class attribute value. `string[]` param +
+  # Array.filter with a predicate callback.
+  export function classAttr(classes: string[]): string boundary(secure) {
+    return classes.filter((c) => c.length > 0).join(" ")
+  }
+}

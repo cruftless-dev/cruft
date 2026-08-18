@@ -1,0 +1,12 @@
+[package]
+publish.workspace = true
+name = "rusty-js-ucd-tables"
+version = "0.1.0"
+edition = "2021"
+license.workspace = true
+
+[lib]
+name = "rusty_js_ucd_tables"
+path = "src/lib.rs"
+
+[dependencies]

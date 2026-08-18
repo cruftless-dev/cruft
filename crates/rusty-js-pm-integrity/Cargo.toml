@@ -1,0 +1,12 @@
+[package]
+license.workspace = true
+publish.workspace = true
+name = "rusty-js-pm-integrity"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+rusty-js-basen = { path = "../rusty-js-basen" }

@@ -1,0 +1,23 @@
+{
+  "name": "@cruftless-dev/cruft",
+  "version": "0.0.9",
+  "description": "cruft — a hand-derived JavaScript/TypeScript runtime",
+  "bin": {
+    "cruft": "bin/cruft.js",
+    "cpx": "bin/cpx.js"
+  },
+  "files": [
+    "bin/"
+  ],
+  "optionalDependencies": {
+    "@cruftless-dev/cruft-linux-x64": "0.0.9",
+    "@cruftless-dev/cruft-linux-arm64": "0.0.9",
+    "@cruftless-dev/cruft-darwin-x64": "0.0.9",
+    "@cruftless-dev/cruft-darwin-arm64": "0.0.9",
+    "@cruftless-dev/cruft-win32-x64": "0.0.9"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "Apache-2.0 OR MIT"
+}

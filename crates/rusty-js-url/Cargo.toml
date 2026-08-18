@@ -1,0 +1,17 @@
+[package]
+license.workspace = true
+publish.workspace = true
+name = "rusty-js-url"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+rusty-js-percent-encoding = { path = "../rusty-js-percent-encoding" }
+
+rusty-js-idna = { path = "../rusty-js-idna" }
+
+[dev-dependencies]
+rusty-json-manifest = { path = "../rusty-json-manifest" }

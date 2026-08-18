@@ -1,0 +1,14 @@
+[package]
+license.workspace = true
+publish.workspace = true
+name = "rusty-tls"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+rusty-x509 = { path = "../x509" }
+rusty-asn1-der = { path = "../asn1-der" }
+rusty-web-crypto = { path = "../web-crypto" }

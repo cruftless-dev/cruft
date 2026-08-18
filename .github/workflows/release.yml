@@ -1,0 +1,157 @@
+# Release workflow for the public cruft repo. Lives in the dev repo at
+# scripts/publish/release.yml; export.sh installs it at .github/workflows/
+# release.yml in the exported tree. Edit it here, never in the public repo.
+#
+# On a v* tag it cross-compiles the cruft binary for the five npm platform
+# targets, populates each @cruftless/cruft-<platform> package, smoke-tests the
+# binary, and publishes the platform packages plus the main @cruftless/cruft
+# package. workflow_dispatch runs build+smoke only by default (dry run).
+#
+# Requires one repo secret: NPM_TOKEN — an npm automation token on the
+# cruftless-dev account with publish rights to the @cruftless scope. The scope
+# must already exist on npmjs.com. Linux binaries are built on ubuntu-22.04
+# (glibc 2.35) as the portability floor.
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Build and smoke only; skip npm publish"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: build ${{ matrix.pkg }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - pkg: cruft-linux-x64
+            target: x86_64-unknown-linux-gnu
+            os: ubuntu-22.04
+          - pkg: cruft-linux-arm64
+            target: aarch64-unknown-linux-gnu
+            os: ubuntu-22.04-arm
+          - pkg: cruft-darwin-x64
+            target: x86_64-apple-darwin
+            os: macos-13
+          - pkg: cruft-darwin-arm64
+            target: aarch64-apple-darwin
+            os: macos-14
+          - pkg: cruft-win32-x64
+            target: x86_64-pc-windows-msvc
+            os: windows-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: ${{ matrix.target }}
+
+      - name: Build cruft
+        run: cargo build --release --bin cruft -p cruft --target ${{ matrix.target }}
+
+      - name: Locate binary
+        id: bin
+        shell: bash
+        run: |
+          if [ "${{ runner.os }}" = "Windows" ]; then
+            echo "path=target/${{ matrix.target }}/release/cruft.exe" >> "$GITHUB_OUTPUT"
+          else
+            echo "path=target/${{ matrix.target }}/release/cruft" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Populate platform package
+        shell: bash
+        run: packaging/npm/build-platform.sh "${{ matrix.target }}" "${{ steps.bin.outputs.path }}"
+
+      - name: Smoke test the binary
+        shell: bash
+        run: |
+          BIN="${{ steps.bin.outputs.path }}"
+          "$BIN" --version
+          "$BIN" packaging/npm/smoke/smoke.mjs
+          "$BIN" -e 'if ((6*7)!==42) { process.exit(1) }'
+
+      - name: Upload populated platform package
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.pkg }}
+          path: packaging/npm/platforms/${{ matrix.pkg }}/
+          include-hidden-files: true
+          retention-days: 3
+
+  publish:
+    name: publish to npm
+    needs: build
+    if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.dry_run == false) }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Download platform packages
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Reassemble platform binaries
+        shell: bash
+        run: |
+          for pkg in cruft-linux-x64 cruft-linux-arm64 cruft-darwin-x64 cruft-darwin-arm64 cruft-win32-x64; do
+            cp -R "artifacts/$pkg/." "packaging/npm/platforms/$pkg/"
+          done
+
+      - name: Stamp version from the tag
+        shell: bash
+        run: |
+          # v0.0.9 -> 0.0.9 on a tag; on a manual dry-run publish, keep package.json as-is.
+          if [ "${{ github.event_name }}" = "push" ]; then
+            VERSION="${GITHUB_REF_NAME#v}"
+            node -e '
+              const fs = require("fs");
+              const v = process.argv[1];
+              const files = [
+                "packaging/npm/cruft/package.json",
+                ...["linux-x64","linux-arm64","darwin-x64","darwin-arm64","win32-x64"]
+                  .map(p => `packaging/npm/platforms/cruft-${p}/package.json`),
+              ];
+              for (const f of files) {
+                const j = JSON.parse(fs.readFileSync(f, "utf8"));
+                j.version = v;
+                if (j.optionalDependencies) {
+                  for (const k of Object.keys(j.optionalDependencies)) j.optionalDependencies[k] = v;
+                }
+                fs.writeFileSync(f, JSON.stringify(j, null, 2) + "\n");
+              }
+            ' "$VERSION"
+          fi
+
+      - name: Publish platform packages
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          for pkg in cruft-linux-x64 cruft-linux-arm64 cruft-darwin-x64 cruft-darwin-arm64 cruft-win32-x64; do
+            npm publish "packaging/npm/platforms/$pkg" --access public
+          done
+
+      - name: Publish main package
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish "packaging/npm/cruft" --access public

@@ -1,0 +1,15 @@
+{
+  "name": "@cruftless-dev/cruft-linux-arm64",
+  "version": "0.0.9",
+  "description": "cruft prebuilt binary for cruft-linux-arm64",
+  "os": [
+    "linux"
+  ],
+  "cpu": [
+    "arm64"
+  ],
+  "files": [
+    "cruft"
+  ],
+  "license": "Apache-2.0 OR MIT"
+}

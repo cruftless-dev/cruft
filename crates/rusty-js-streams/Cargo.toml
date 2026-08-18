@@ -1,0 +1,12 @@
+[package]
+license.workspace = true
+publish.workspace = true
+name = "rusty-js-streams"
+version = "0.1.0"
+edition = "2021"
+description = "Self-hosted WHATWG Streams (JS prelude) for Cruft, extracted from the runtime intrinsics."
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]

@@ -1,0 +1,15 @@
+{
+  "name": "@cruftless-dev/cruft-win32-x64",
+  "version": "0.0.9",
+  "description": "cruft prebuilt binary for cruft-win32-x64",
+  "os": [
+    "win32"
+  ],
+  "cpu": [
+    "x64"
+  ],
+  "files": [
+    "cruft.exe"
+  ],
+  "license": "Apache-2.0 OR MIT"
+}

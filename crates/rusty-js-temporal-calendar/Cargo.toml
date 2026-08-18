@@ -1,0 +1,10 @@
+[package]
+license.workspace = true
+publish.workspace = true
+name = "rusty-js-temporal-calendar"
+version = "0.1.0"
+edition = "2021"
+description = "Julian-family arithmetic calendar kernel for Cruft's Temporal implementation. RataDie pivot + Julian base + Gregorian as a parameterized century-correction refinement. Derived from the icu_calendar / temporal_rs reference implementations. ISO/proleptic-Gregorian only; non-ISO calendars are out of scope (delegated to ICU4X)."
+
+[lib]
+path = "src/lib.rs"

@@ -1,0 +1,9 @@
+[package]
+license.workspace = true
+publish.workspace = true
+name = "rusty-js-indexmap"
+version = "0.1.0"
+edition = "2021"
+description = "Hand-derived insertion-ordered map/set covering the indexmap consumed surface."
+
+[dependencies]
