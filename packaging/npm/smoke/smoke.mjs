@@ -15,7 +15,7 @@ if (!obj.ok || obj.n !== 42 || JSON.stringify(obj) !== '{"ok":true,"n":42}') {
   process.exit(1);
 }
 
-const self = fs.readFileSync(new URL(import.meta.url), "utf8");
+const self = fs.readFileSync(process.argv[1], "utf8");
 if (!self.includes(MARK)) {
   console.error("smoke: fs read failed");
   process.exit(1);
