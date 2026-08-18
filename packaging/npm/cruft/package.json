@@ -1,7 +1,9 @@
 {
   "name": "cruftjs",
   "version": "0.0.9",
-  "description": "cruft — a hand-derived JavaScript/TypeScript runtime",
+  "description": "The JavaScript engine, runtime, and ecosystem stack for your agents.",
+  "homepage": "https://cruft.sh",
+  "repository": { "type": "git", "url": "git+https://github.com/cruftless-dev/cruft.git" },
   "bin": {
     "cruft": "bin/cruft.js",
     "cpx": "bin/cpx.js"

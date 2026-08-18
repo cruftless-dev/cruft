@@ -3,6 +3,8 @@
 A JavaScript and TypeScript runtime with its own engine, built so you can run
 npm dependencies without handing each one your files, network, and environment.
 
+**[cruft.sh](https://cruft.sh)** · [Documentation](https://cruft.sh/docs) · [GitHub](https://github.com/cruftless-dev/cruft)
+
 > Cruft is an alpha release (0.0.9). Do not use it in production.
 
 ## The problem

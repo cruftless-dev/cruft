@@ -155,6 +155,11 @@ jobs:
             npm publish "packaging/npm/platforms/$pkg" --access public
           done
 
+      - name: Bundle README + license into the main package
+        run: |
+          cp README.md packaging/npm/cruft/README.md
+          cp LICENSE LICENSE-APACHE LICENSE-MIT NOTICE packaging/npm/cruft/
+
       - name: Publish main package
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
