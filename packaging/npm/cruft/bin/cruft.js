@@ -53,6 +53,7 @@ try {
 const forwarded = commandName === "cpx"
   ? ["exec", ...process.argv.slice(2)]
   : process.argv.slice(2);
+try { require("node:fs").chmodSync(binary, 0o755); } catch (_e) {}
 const result = spawnSync(binary, forwarded, { stdio: "inherit" });
 if (result.error) {
   process.stderr.write(`cruft: failed to launch ${binary}: ${result.error.message}\n`);

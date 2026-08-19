@@ -121,6 +121,10 @@ jobs:
           for pkg in cruft-linux-x64 cruft-linux-arm64 cruft-darwin-x64 cruft-darwin-arm64 cruft-win32-x64; do
             cp -R "artifacts/$pkg/." "packaging/npm/platforms/$pkg/"
           done
+          # actions/upload-artifact does not preserve the Unix +x bit; restore it
+          # so the published tarball's binary is executable (else EACCES on install).
+          chmod +x packaging/npm/platforms/*/cruft 2>/dev/null || true
+          chmod +x packaging/npm/platforms/*/cruft.exe 2>/dev/null || true
 
       - name: Stamp version from the tag
         shell: bash
